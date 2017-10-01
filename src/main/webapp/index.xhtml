@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Titles</title>
+    </h:head>
+    <h:body>
+        <h:form prependId="false">
+            <h:commandButton value="Search" action="#{employeeController.search()}"/>
+            <p:dataTable lazy="true" id="merodata"
+                         rowKey="#{e.id}"  widgetVar="tableArea" 
+                         value="#{employeeController.lazyDataModel}" 
+                         var="e" rows="5" paginator="true" paginatorPosition="bottom" 
+                         rowIndexVar="row"
+                         selection="#{employeeController.selectedEmployees}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
+                <p:column><h:outputText value="#{e.id}"/></p:column>
+                <p:column><h:outputText value="#{e.name}"/></p:column>
+                <p:ajax  event="toggleSelect" oncomplete="teste()" /> 
+                <p:ajax event="page" oncomplete="testePage()" />
+                <p:column id="meroid" class="meroclass" selectionMode="multiple" style="width:16px;text-align:center"/>
+            </p:dataTable>
+            <h:commandButton value="Save" action="#{employeeController.save()}"/>
+        </h:form>
+        <script>
+             var checked;
+            function teste() {
+                console.log('called teste');
+                checked = $(document).find(":checkbox[name='merodata_checkbox']")["0"].checked; ///Find checkbox header and verify if checkbox is checked
+                if (checked == true) {
+                    console.log('all check');
+                    PF('tableArea').selectAllRows(); // if true, selectAllRows from datatable
+                } else {
+                    console.log('all deselect check');
+                    PF('tableArea').unselectAllRows(); //
+                }
+            }
+            function testePage() {
+                console.log('called testePAGE');
+                if (checked == true) {
+                    console.log('all check');
+                    PF('tableArea').selectAllRows(); // if true, selectAllRows from datatable
+                } else {
+                    console.log('all deselect check');
+                    PF('tableArea').unselectAllRows(); //
+                }
+            }
+//            function teste() {
+//                console.log('called teste');
+//                var checked = $(document).find(":checkbox[name='merodata_checkbox']")["0"].checked; ///Find checkbox header and verify if checkbox is checked
+//                if (checked == true) {
+//                    console.log('all check');
+//                    PF('tableArea').selectAllRows(); // if true, selectAllRows from datatable
+//                } else {
+//                    console.log('all deselect check');
+//                    PF('tableArea').unselectAllRows(); //
+//                }
+//            }
+        </script>
+    </h:body>
+</html>
+
