@@ -287,7 +287,7 @@ public class WebConfiguration {
             if (null == value) {
                 result = new String[0];
             } else {
-                result = Util.split(value, sep);
+               // result = Util.split(value, sep);
             }
             cachedListParams.put(param, result);
         }
